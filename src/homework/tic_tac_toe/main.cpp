@@ -7,31 +7,50 @@ int main()
 {
 	string player = "Y";
 	TicTacToe game;
+	string cont;
 
-	while (!(player == "O" || player == "X")) 
+	do
 	{
-		try 
+		while (!(player == "O" || player == "X"))
 		{
-			cout << "Enter player: ";
-			cin >> player;
+			try
+			{
+				cout << "Enter player: ";
+				cin >> player;
 
-			game.start_game(player);
+				game.start_game(player);
+			}
+			catch (Error e)
+			{
+				cout << e.get_message();
+			}
 		}
-		catch (Error e) 
+
+		int choice = 1;
+
+		do
 		{
-			cout << e.get_message();
-		}
-	}
+			try
+			{
+				int pos;
+				cout << "\nposition: \n";
+				cin >> pos;
+				game.mark_board(pos);
+				game.display_board();
+			}
+			catch (Error e)
+			{
+				cout << e.get_message();
+			}
 
-	do 
-	{
-		int pos;
-		cout << "position: ";
-		cin >> pos;
-		game.mark_board(pos);
-		game.display_board();
-		
-	} while (!game.game_over());
+		} while (!game.game_over());
+
+		cout << "\nWinner: " << game.get_winner()<<"\n";
+
+		cout << "Enter Y to play again: ";
+		cin >> cont;
+	
+	} while (cont == "Y");
 
 
 	return 0;
