@@ -37,7 +37,7 @@ Copied temporary memory to this class (nums)
 Set size to right-hand operand size
 Return a dereferenced instance of this class
 */
-/*Vector & Vector::operator=(const Vector & v)
+Vector & Vector::operator=(const Vector & v)
 {
 	int* temp = new int[v.size];
 
@@ -52,7 +52,29 @@ Return a dereferenced instance of this class
 	size = v.size;
 
 	return *this;
-}*/
+}
+
+/*
+Use move source pointer
+Point move source pointer to nothing
+*/
+Vector::Vector(Vector && v)
+	: size{ v.size }, nums{ v.nums }
+{
+	v.size = 0;
+	v.nums = nullptr;
+}
+//v = 
+Vector & Vector::operator=(Vector && v)
+{
+	delete nums;
+	nums = v.nums;
+	size = v.size;
+	v.nums = nullptr;
+	v.size = 0;
+
+	return *this;
+}
 
 Vector::~Vector() 
 {
@@ -63,4 +85,10 @@ Vector::~Vector()
 void use_vector()
 {
 	Vector v(3);	
+}
+
+Vector get_vector()
+{
+	Vector v = Vector(3);
+	return v;
 }
