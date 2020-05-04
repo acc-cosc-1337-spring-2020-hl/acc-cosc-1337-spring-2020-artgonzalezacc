@@ -1,12 +1,18 @@
 #include "vector.h"
 #include<iostream>
 
+Vector::Vector() 
+	: size {0},nums{nullptr}, space{0}
+{
+
+}
+
 /*
 Allocated dynamic memory for an array of sz(size) elements
 Initialized all of the array elements to 0
 */
 Vector::Vector(size_t sz)
-	:size{sz}, nums{new int[sz]}
+	:size{sz}, nums{new int[sz]}, space{sz}
 {
 	std::cout << "allocate memory\n";
 	for (size_t i = 0; i < sz; ++i) 

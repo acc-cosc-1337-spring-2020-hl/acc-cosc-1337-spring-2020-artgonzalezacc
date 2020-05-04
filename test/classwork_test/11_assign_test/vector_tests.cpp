@@ -44,7 +44,7 @@ TEST_CASE("Test class copy w 2 instances of Vector")
 TEST_CASE("Vector capacity with reserve function call") 
 {
 	Vector v(3);
-	REQUIRE(v.Capacity() == 0);
+	REQUIRE(v.Capacity() == 3);
 	
 	v.Reserve(6);
 	REQUIRE(v.Capacity() == 6);
@@ -66,4 +66,13 @@ TEST_CASE("Vector Resize element's value copied and initiliazed")
 	REQUIRE(v[4] == 0);
 	REQUIRE(v[5] == 0);
 
+}
+
+TEST_CASE("Test vector pushback with our default constructor") 
+{
+	Vector v;
+	v.Push_Back(5);
+	REQUIRE(v.Capacity() == 8);//?
+	REQUIRE(v[0] == 5);
+	REQUIRE(v.Size() == 1);
 }
