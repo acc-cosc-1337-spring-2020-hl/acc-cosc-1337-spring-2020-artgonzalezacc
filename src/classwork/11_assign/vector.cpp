@@ -1,7 +1,8 @@
 #include "vector.h"
 #include<iostream>
 
-Vector::Vector() 
+template<typename T>
+Vector<T>::Vector() 
 	: size {0},nums{nullptr}, space{0}
 {
 
@@ -11,8 +12,9 @@ Vector::Vector()
 Allocated dynamic memory for an array of sz(size) elements
 Initialized all of the array elements to 0
 */
-Vector::Vector(size_t sz)
-	:size{sz}, nums{new int[sz]}, space{sz}
+template<typename T>
+Vector<T>::Vector(size_t sz)
+	:size{sz}, nums{new T[sz]}, space{sz}
 {
 	std::cout << "allocate memory\n";
 	for (size_t i = 0; i < sz; ++i) 
@@ -26,8 +28,9 @@ Set the new class size to the right-hand operand array size
 Allocated a dynamic memory array of size elements
 Initialized all the elements to the value of the right-hand operand(class)
 */
-Vector::Vector(const Vector & v)
-	: size{v.size}, nums{new int[v.size]}
+template<typename T>
+Vector<T>::Vector(const Vector<T> & v)
+	: size{v.size}, nums{new T[v.size]}
 {
 	for (size_t i = 0; i < size; ++i) 
 	{
@@ -43,7 +46,8 @@ Copied temporary memory to this class (nums)
 Set size to right-hand operand size
 Return a dereferenced instance of this class
 */
-Vector & Vector::operator=(const Vector & v)
+template<typename T>
+Vector<T> & Vector<T>::operator=(const Vector<T> & v)
 {
 	if (this == &v) //prevent self copy
 	{
@@ -62,7 +66,7 @@ Vector & Vector::operator=(const Vector & v)
 		return *this;
 	}
 
-	int* temp = new int[v.size];
+	T* temp = new T[v.size];
 
 	for (size_t i = 0; i < v.size; ++i) 
 	{
@@ -81,14 +85,16 @@ Vector & Vector::operator=(const Vector & v)
 Use move source pointer
 Point move source pointer to nothing
 */
-Vector::Vector(Vector && v)
+template<typename T>
+Vector<T>::Vector(Vector<T> && v)
 	: size{ v.size }, nums{ v.nums }
 {
 	v.size = 0;
 	v.nums = nullptr;
 }
 //v = 
-Vector & Vector::operator=(Vector && v)
+template<typename T>
+Vector<T> & Vector<T>::operator=(Vector<T> && v)
 {
 	delete nums;
 	nums = v.nums;
@@ -108,14 +114,15 @@ Set nums to new temporary dynamic array
 Space to new allocation
 
 */
-void Vector::Reserve(size_t new_allocation) 
+template<typename T>
+void Vector<T>::Reserve(size_t new_allocation) 
 {
 	if (new_allocation <= space) 
 	{
 		return;
 	}
 
-	int* temp = new int[new_allocation];
+	T* temp = new T[new_allocation];
 
 	for (size_t i = 0; i < size; ++i) 
 	{
@@ -131,7 +138,8 @@ void Vector::Reserve(size_t new_allocation)
 /*
 
 */
-void Vector::Resize(size_t new_size)
+template<typename T>
+void Vector<T>::Resize(size_t new_size)
 {
 	Reserve(new_size);
 
@@ -141,7 +149,8 @@ void Vector::Resize(size_t new_size)
 	}
 }
 
-void Vector::Push_Back(int value)
+template<typename T>
+void Vector<T>::Push_Back(T value)
 {
 	if (space == 0) 
 	{
@@ -156,19 +165,23 @@ void Vector::Push_Back(int value)
 	++size;
 }
 
-Vector::~Vector()
+template<typename T>
+Vector<T>::~Vector()
 {
 	std::cout << "release memory\n\n";
 	delete[] nums;
 }
 
+template class Vector<int>;
+template class Vector<double>;
+
 void use_vector()
 {
-	Vector v(3);	
+	Vector<int> v(3);	
 }
 
-Vector get_vector()
+Vector<int> get_vector()
 {
-	Vector v = Vector(3);
+	Vector<int> v(3);
 	return v;
 }
