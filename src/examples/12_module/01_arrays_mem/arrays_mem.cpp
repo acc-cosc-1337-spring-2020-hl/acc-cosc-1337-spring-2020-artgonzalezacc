@@ -6,7 +6,7 @@ void stack_array()
 {
 	const int SIZE = 5;
 	int hours[SIZE];
-
+	
 	for (int i = 0; i < SIZE; ++i) 
 	{
 		hours[i] = i * 10;
